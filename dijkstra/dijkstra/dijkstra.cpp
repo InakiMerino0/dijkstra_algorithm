@@ -50,18 +50,16 @@ void printSolution(int** dist, int V, int** local, string* nameLocations)
 void dijkstra(int src, int finalNode, int** graph, int V, string* nameLocations) {
 	// Declaración de arrays necesarios para la lógica
 	int* finalDistance = new int[V];
-	int* tempDistance = new int[V];
 	bool* visited = new bool[V];
 
 	// Inicialización de arrays, sin incluir el nodo 0 (inicializado debajo)
 	for (int i = 0; i < V; i++) {
-		tempDistance[i] = INF;
-		finalDistance[i] = 0;
+		finalDistance[i] = INF;
 		visited[i] = false;
 	}
 
 	// Inicialización nodo 0
-	tempDistance[0] = src;
+	finalDistance[0] = src;
 
 	bool finished = false;
 
@@ -72,21 +70,20 @@ void dijkstra(int src, int finalNode, int** graph, int V, string* nameLocations)
 
 		// Localizar el nodo de menor distancia temporal de los nodos no visitados
 		for (int i = 0; i < V; i++) {
-			if (!visited[i] && tempDistance[i] < minDist) {
-				minDist = tempDistance[i];
+			if (!visited[i] && finalDistance[i] < minDist && finalDistance[i]) {
+				minDist = finalDistance[i];
 				u = i;
 			}
 		}
 
 		// Confirmar distancia final de u
-		finalDistance[u] = tempDistance[u];
 		visited[u] = true;
 
 		// Actualizar distancia temporal de nodos adyacentes aún no visitados
 		for (int i = 0; i < V; i++) {
 			if (graph[u][i] != INF && !visited[i]) {
-				if (tempDistance[i] > tempDistance[u] + graph[u][i]) {
-					tempDistance[i] = tempDistance[u] + graph[u][i];
+				if (finalDistance[i] > finalDistance[u] + graph[u][i]) {
+					finalDistance[i] = finalDistance[u] + graph[u][i];
 				}
 			}
 		}
@@ -104,12 +101,11 @@ void dijkstra(int src, int finalNode, int** graph, int V, string* nameLocations)
 	// Imprimir las distancias finales desde el nodo 0
 	cout << "Distancias finales desde el nodo 0:" << endl;
 	for (int i = 0; i < V; i++) {
-		cout << nameLocations[i] << "->" << tempDistance[i] << endl;
+		cout << nameLocations[i] << "->" << finalDistance[i] << endl;
 	}
 
 	// Liberar memoria
 	delete[] finalDistance;
-	delete[] tempDistance;
 	delete[] visited;
 }
 
