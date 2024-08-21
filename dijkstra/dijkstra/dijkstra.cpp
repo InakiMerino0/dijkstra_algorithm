@@ -52,14 +52,14 @@ void dijkstra(int src, int finalNode, int** graph, int V, string* nameLocations)
 	int* finalDistance = new int[V];
 	bool* visited = new bool[V];
 
-	// Inicialización de arrays, sin incluir el nodo 0 (inicializado debajo)
+	// Inicialización de arrays
 	for (int i = 0; i < V; i++) {
 		finalDistance[i] = INF;
 		visited[i] = false;
 	}
 
 	// Inicialización nodo 0
-	finalDistance[0] = src;
+	finalDistance[src] = 0;
 
 	bool finished = false;
 
@@ -98,8 +98,16 @@ void dijkstra(int src, int finalNode, int** graph, int V, string* nameLocations)
 		}
 	}
 
+	// Imprimir distancia de nodo raiz seleccionado, a nodo final seleccionado
+	cout << "Distancia final a la ciudad seleccionada" << endl;
+	cout << nameLocations[src] << "->" << nameLocations[finalNode] << ": " << finalDistance[finalNode] << endl;
+
+	// Falta agregar:
+	// Verificacion de indices que ingresa el usuario para que sean validos (insercion en el main)
+	// Resta para conocer el recorrido que se hace para obtener la distancia minima entre src y finalNode
+
 	// Imprimir las distancias finales desde el nodo 0
-	cout << "Distancias finales desde el nodo 0:" << endl;
+	cout << "Distancias finales desde la ciudad " << nameLocations[src] << " al resto de ciudades." << endl;
 	for (int i = 0; i < V; i++) {
 		cout << nameLocations[i] << "->" << finalDistance[i] << endl;
 	}
